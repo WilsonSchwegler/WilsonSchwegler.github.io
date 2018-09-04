@@ -1,0 +1,86 @@
+body{
+    font-family: sans-serif, helvetica, arial;
+    line-height:1.5;
+    text-align:center; 
+    font-size: 18px;
+    
+    
+    
+}
+header{
+    background: rgb(208, 25, 38);
+    border-bottom: black 5px solid;
+    min-height: 120px;
+
+}
+
+header a{
+    color: white;
+    text-decoration:none;
+    
+}
+li{
+	display:inline;
+}
+header h1{
+	float:left;
+	margin-top: 50px;
+}
+nav{
+	float:right;
+	margin-top: 50px;
+    
+}
+header li{
+	display: inline;
+	margin:10px;
+	font-size:20px;
+	color:white;
+}
+
+#showcase{
+
+    background:url(wow.jpeg) no-repeat -0px +0px; 
+    min-height: 700px;
+    max-height: 1000000000px;
+    color:rgb(0, 162, 254);
+    background-size:cover;
+    font-weight:bold;
+}
+#showcase h1{
+    color:red;
+    
+}
+.Game h3{
+    color: white;
+}
+#Games{
+    margin-top:20px
+}
+#Games h2{
+     font-weight:bold;
+}
+.Game{
+    float: left;
+    width: 33%;
+    text-align:center;
+}
+footer{
+    background:rgb(208, 25, 38);
+    border-bottom: black 5px solid;
+    margin-top:10px;
+    border-top: black 3px solid;
+    
+}
+.container{
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+header a:hover{
+    color:magenta;
+    font-weight:bold;
+}
+.highlight{
+    color:rgb(0, 162, 254);
+}

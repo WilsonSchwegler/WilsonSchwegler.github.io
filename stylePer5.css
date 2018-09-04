@@ -1,0 +1,82 @@
+body{
+    font-family: sans-serif, helvetica, arial;
+    line-height:1.5;
+    text-align:center; 
+    font-size: 18px;
+    
+    
+    
+}
+header{
+    background: rgb(255,198,42);
+    border-bottom: rgb(246, 0, 0) 5px solid;
+    min-height: 120px;
+}
+
+header a{
+    color: white;
+    text-decoration:none;
+    
+}
+li{
+	display:inline;
+}
+header h1{
+	float:left;
+	margin-top: 50px;
+}
+nav{
+	float:right;
+	margin-top: 50px;
+    
+}
+header li{
+	display: inline;
+	margin:10px;
+	font-size:20px;
+	color:white;
+}
+
+#showcase{
+
+    background:url(hugepizza.jpg) no-repeat +340px -20px; 
+    min-height: 700px;
+    max-height: 600px;
+    color:white;
+}
+#showcase h1{
+    color:red;
+    margin:auto;
+    margin-top:50px;
+
+}
+.pizza h3{
+    color: white;
+}
+#food{
+    margin-top:20px
+}
+.pizza{
+    float: left;
+    width: 33%;
+    text-align:center;
+}
+footer{
+    background: rgb(255,198,42);
+    border-bottom: rgb(246, 0, 0) 5px solid;
+    margin-top:10px;
+    border-top: rgb(255, 198, 42) 3px solid;
+    
+}
+.container{
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+}
+header a:hover{
+    color:rgb(246, 0, 0);
+    font-weight:bold;
+}
+.highlight{
+    color:blue;
+}
