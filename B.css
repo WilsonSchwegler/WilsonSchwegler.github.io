@@ -1,5 +1,5 @@
 body{
-    font-family: sans-serif, helvetica, arial;
+    font-family: Verdana , Tahoma, Impact, fantasy, helvetica, arial;
     line-height:1.5;
     text-align:center; 
     font-size: 18px;
@@ -11,7 +11,8 @@ header{
     background: rgb(208, 25, 38);
     border-bottom: black 5px solid;
     min-height: 120px;
-
+    font-family: cursive;
+    
 }
 header a{
     color: white;
@@ -24,6 +25,7 @@ li{
 header h1{
 	float:left;
 	margin-top: 50px;
+	
 }
 header li{
 	display: inline;
@@ -43,6 +45,11 @@ header a:hover{
 .highlight{
     color:rgb(0, 162, 254);
 }
+
+.po{
+    width:33%;
+    float: left;
+}
 .container{
     width: 80%;
     margin: auto;
@@ -53,5 +60,7 @@ footer{
     border-bottom: black 5px solid;
     margin-top:10px;
     border-top: black 3px solid;
-    
+    position: absolute;
+    bottom: 0px;
+    left: 15px; right: 15px
 }

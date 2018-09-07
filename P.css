@@ -1,5 +1,5 @@
 body{
-    font-family: sans-serif, helvetica, arial;
+    font-family: Verdana , Tahoma, Impact, fantasy, helvetica, arial;
     line-height:1.5;
     text-align:center; 
     font-size: 18px;
@@ -11,6 +11,7 @@ header{
     background: rgb(208, 25, 38);
     border-bottom: black 5px solid;
     min-height: 120px;
+    font-family: cursive;
 
 }
 header a{
