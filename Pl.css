@@ -56,3 +56,11 @@ footer{
     border-top: black 3px solid;
     
 }
+
+#container2 h5{
+    color:white;
+}
+#container2 h3{
+    font-weight:bold;
+    
+}
