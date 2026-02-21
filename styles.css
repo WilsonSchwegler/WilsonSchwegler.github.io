@@ -317,7 +317,7 @@ body::before {
   .bg-video-wrapper video {
     transform:
       translate(-55%, -35%)   
-      scale(0.5);           
+      scale(0.55);           
   }
 }
 
