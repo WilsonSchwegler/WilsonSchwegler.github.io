@@ -2,8 +2,8 @@ body {
   font-family: system-ui, sans-serif;
   margin: 0;
   padding: 2rem;
-  background: #f7f7f7;
-  color: #111;
+  background: #323131;
+  color: #8800e2;
 }
 
 header {
@@ -13,14 +13,14 @@ header {
 }
 
 .bio {
-  color: #555;
+  color: #8800e2;
 }
 
 .nav-buttons a {
   margin: 0 10px;
   text-decoration: none;
   font-weight: 500;
-  color: #0066cc;
+  color: #0300a1;
 }
 
 .projects {
@@ -32,11 +32,11 @@ header {
 }
 
 .project-card {
-  background: white;
+  background: #5b5959;
   border-radius: 8px;
   padding: 1.25rem;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 12px #484646;
   transition: transform 0.2s ease;
 }
 
