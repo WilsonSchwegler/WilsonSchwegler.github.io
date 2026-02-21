@@ -2,7 +2,8 @@
    BASE
 ========================= */
 body {
-  font-family: system-ui, sans-serif;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.95em;
   margin: 0;
   background: #121212;
   color: #E6E6E6;
