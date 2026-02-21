@@ -289,14 +289,3 @@ body {
   box-shadow: 0 8px 24px rgba(0,0,0,0.35);
 }
 
-.project-link {
-  display: inline-block;
-  margin-top: 0.75rem;
-  color: #7C6AE6;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.project-link:hover {
-  text-decoration: underline;
-}
