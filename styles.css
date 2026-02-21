@@ -49,3 +49,49 @@ header {
   margin-top: 1rem;
   color: #444;
 }
+
+.blog-list {
+  max-width: 700px;
+  margin: auto;
+}
+
+.blog-preview {
+  margin-bottom: 2.5rem;
+}
+
+.blog-preview h2 {
+  margin-bottom: 0.25rem;
+}
+
+.blog-preview a {
+  text-decoration: none;
+  color: #111;
+}
+
+.blog-preview a:hover {
+  color: #0066cc;
+}
+
+.blog-date {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+.blog-summary {
+  color: #444;
+}
+
+.blog-post {
+  max-width: 700px;
+  margin: auto;
+}
+
+.blog-post h1 {
+  margin-bottom: 0.25rem;
+}
+
+.post-nav {
+  margin-top: 3rem;
+  display: flex;
+  gap: 2rem;
+}
