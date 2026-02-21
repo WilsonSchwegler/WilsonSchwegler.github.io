@@ -313,3 +313,11 @@ body::before {
     scale(0.8)
 }
 
+@media (max-width: 768px) {
+  .bg-video-wrapper video {
+    transform:
+      translate(-50%, -35%)   
+      scale(0.65);           
+  }
+}
+
