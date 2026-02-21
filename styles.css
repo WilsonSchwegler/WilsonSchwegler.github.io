@@ -309,6 +309,7 @@ body::before {
   top: 50%;
   left: 50%;
   transform:
-    translate(-53%, -24%)
+    translate(-53.5%, -28%)
+    scale(0.8)
 }
 
