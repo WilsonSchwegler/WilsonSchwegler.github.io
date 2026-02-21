@@ -2,64 +2,132 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Wilson Schwegler</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
 </head>
 <body>
 
-<header>
-  <h1>Wilson Schwegler</h1>
-  <p class="bio">
-    Master of Science in Computer Science from the University of California, Davis (In Progress - Expected June 2027)
-    Bachelor of Arts in Computer Science and Economics from Occidental College (Completed 2025)
-  </p>
+<nav class="top-nav">
+  <a href="blog.html" class="nav-link">
+    <img src="assets/icons/blog.png" alt="" />
+    <span>Research Blog</span>
+  </a>
 
-  <div class="nav-buttons">
-    <a href="blog.html">Research Blog</a>
-    <a href="https://github.com/WilsonSchwegler" target="_blank">GitHub</a>
-    <a href="cv/wilson_schwegler_cv.pdf" target="_blank">CV</a>
+  <a href="https://www.linkedin.com/in/wilson-schwegler-baa7a6263" class="nav-link" target="_blank">
+    <img src="assets/icons/linkedin.png" alt="" />
+    <span>LinkedIn</span>
+  </a>
+
+  <a href="https://github.com/WilsonSchwegler" class="nav-link" target="_blank">
+    <img src="assets/icons/github.png" alt="" />
+    <span>GitHub</span>
+  </a>
+
+  <a href="cv/assets/Resume.pdf" class="nav-link" target="_blank">
+    <img src="assets/icons/resume.png" alt="" />
+    <span>CV</span>
+  </a>
+</nav>
+
+
+<section class="hero">
+  <!-- LEFT COLUMN -->
+  <div class="hero-left">
+    <img
+      src="assets/headshot.png"
+      alt="Wilson Schwegler headshot"
+      class="headshot"
+    />
+
+    <h1>
+      <span class="name">Wilson Schwegler</span>
+    </h1>
+
+    <p class="hero-role">
+      wschwegler21[at]gmail[dot]com
+    </p>
+
+    <p class="bio">
+      • MS in Computer Science @ UC Davis<br />
+      • BA in Computer Science & Economics @ Occidental College
+    </p>
   </div>
-</header>
 
-<main class="projects">
-  <div class="project-card" onclick="toggleCard(this)">
-    <h2>PFAS Bioactivity Prediction</h2>
-    <div class="project-details">
-      <p>
-        Uncertainty-aware forecasting using conformalized quantile regression
-        on pitch-level Statcast data.
-      </p>
+  <!-- RIGHT COLUMN -->
+  <div class="hero-right">
+    <h1>
+      Research Projects 
+    </h1>
+    <div class="project-card" onclick="toggleCard(this)">
+      <h2>Uncertainty Aware Forecasting of MLB Pitcher Value Using Pitch Level Information</h2>
+      <div class="project-details">
+        <p>
+          <span style="color: #7C6AE6;">(Inprogress)</span> This project studies uncertainty-aware forecasting of MLB 
+          pitcher value by modeling next-season fWAR as a distributional prediction 
+          problem using quantile regression and conformal calibration. It compares 
+          nested feature sets, moving from season-level statistics to basic pitch-level 
+          characteristics, to evaluate how added pitch information affects the sharpness 
+          and quality of prediction intervals. Preliminary results indicate that incorporating 
+          basic pitch-level features leads to narrower prediction intervals and lower Winkler 
+          scores, with modest improvements in median error, particularly for starting pitchers. 
+        </p>
+        <a
+      class="project-link"
+      href="blog/uncertainty-war.html"
+      target="_blank"
+      onclick="event.stopPropagation()"
+    >
+      View Case Study Blog →
+    </a>
+      </div>
+    </div>
+
+    <div class="project-card" onclick="toggleCard(this)">
+  <h2>Comparing a Neural Network and a Graph Neural Network for Predicting PFAS Bioactivity</h2>
+
+  <div class="project-details">
+    <p>
+      This project evaluates the effectiveness of a traditional neural network
+      versus a graph neural network for predicting the bioactivity of PFAS
+      molecules, which are environmentally persistent chemicals linked to serious
+      health risks. Using a large PFAS bioassay dataset, the models are compared
+      under different precision–recall tradeoffs, showing that neural networks
+      are better at minimizing false positives while graph neural networks excel
+      at identifying active molecules when recall is prioritized. The results
+      highlight how model choice should depend on the specific scientific or
+      regulatory goal of PFAS screening.
+    </p>
+
+    <a
+      class="project-link"
+      href="https://github.com/WilsonSchwegler/pfas-bioactivity-nn-vs-gnn"
+      target="_blank"
+      onclick="event.stopPropagation()"
+    >
+      View on GitHub →
+    </a>
     </div>
   </div>
 
-  <div class="project-card" onclick="toggleCard(this)">
-    <h2>PFAS Bioactivity Prediction</h2>
-    <div class="project-details">
-      <p>
-        Graph Neural Networks vs dense models for molecular bioactivity.
-      </p>
+    <div class="project-card" onclick="toggleCard(this)">
+      <h2>LLNL Capsule Detection Project</h2>
+      <div class="project-details">
+        <p>
+          This project developed and optimized a YOLO-based multi-object tracking pipeline 
+          for analyzing NIF target capsules during chemical vapor deposition, consolidating 
+          previously separate processing stages into a single streamlined workflow. Final results 
+          show significant performance gains, with CPU processing achieving up to <span style="color: #7C6AE6;">1.43×</span> 
+          speedup and GPU processing achieving up to <span style="color: #7C6AE6;">2.3×</span> 
+          speedup, alongside improved logging, error detection, and metric extraction. 
+          These improvements enabled reliable analysis of longer, higher-quality experimental 
+          videos and supported more consistent evaluation of capsule behavior across test runs. 
+        </p>
+      </div>
     </div>
   </div>
-
-  <div class="project-card" onclick="toggleCard(this)">
-    <h2>LLNL Capsule Detection</h2>
-    <div class="project-details">
-      <p>
-        YOLO-based multi-object detection and tracking on NIF capsule imagery.
-      </p>
-    </div>
-  </div>
-
-  <div class="project-card" onclick="toggleCard(this)">
-    <h2>Data Visualization Dashboards</h2>
-    <div class="project-details">
-      <p>
-        Interactive D3 + React dashboards for exploratory data analysis.
-      </p>
-    </div>
-  </div>
-</main>
+</section>
 
 </body>
 </html>

@@ -2,22 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blog | Wilson Schwegler</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<nav class="navbar">
-  <a href="index.html">Bio</a>
-  <a href="blog.html">Blog</a>
-  <a href="cv/wilson_schwegler_cv.pdf" target="_blank">Resume</a>
+<nav class="top-nav">
+  <a href="index.html" class="nav-link">
+    <img src="assets/icons/bio.png" alt="" />
+    <span>Bio</span>
+  </a>
+
+  <a href="https://www.linkedin.com/in/wilson-schwegler-baa7a6263" class="nav-link" target="_blank">
+    <img src="assets/icons/linkedin.png" alt="" />
+    <span>LinkedIn</span>
+  </a>
+
+  <a href="https://github.com/WilsonSchwegler" class="nav-link" target="_blank">
+    <img src="assets/icons/github.png" alt="" />
+    <span>GitHub</span>
+  </a>
+
+  <a href="cv/assets/Resume.pdf" class="nav-link" target="_blank">
+    <img src="assets/icons/resume.png" alt="" />
+    <span>CV</span>
+  </a>
 </nav>
 
 <main class="blog-list">
   <article class="blog-preview">
     <h2>
       <a href="blog/uncertainty-war.html">
-        Why Uncertainty Matters in Pitcher Evaluation
+        Same Projection, Different Confidence
       </a>
     </h2>
     <p class="blog-date">February 2026</p>
@@ -25,19 +42,6 @@
       Projection systems often report point estimates, but front offices make
       decisions under uncertainty. This post explores why interval forecasts
       provide a more realistic decision framework.
-    </p>
-  </article>
-
-  <article class="blog-preview">
-    <h2>
-      <a href="blog/llnl-yolo.html">
-        Lessons from Building YOLO Pipelines at LLNL
-      </a>
-    </h2>
-    <p class="blog-date">January 2026</p>
-    <p class="blog-summary">
-      A practical discussion of multi-GPU training, detection + tracking,
-      and performance tradeoffs learned while working on capsule imagery.
     </p>
   </article>
 </main>
