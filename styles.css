@@ -1,0 +1,51 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background: #f7f7f7;
+  color: #111;
+}
+
+header {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+}
+
+.bio {
+  color: #555;
+}
+
+.nav-buttons a {
+  margin: 0 10px;
+  text-decoration: none;
+  font-weight: 500;
+  color: #0066cc;
+}
+
+.projects {
+  max-width: 900px;
+  margin: 3rem auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.25rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+}
+
+.project-details {
+  display: none;
+  margin-top: 1rem;
+  color: #444;
+}
