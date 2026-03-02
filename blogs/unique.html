@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Unique is a Pitcher? Measuring Pitch Profile Difference with Statcast</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+
+<nav class="top-nav">
+    <a href="../index.html" class="nav-link">
+    <img src="../assets/icons/bio.png" alt="" />
+    <span>Bio</span>
+  </a>
+
+  <a href="../blog.html" class="nav-link">
+    <img src="../assets/icons/blog.png" alt="" />
+    <span>Research Blog</span>
+  </a>
+
+  <a href="https://www.linkedin.com/in/wilson-schwegler-baa7a6263" class="nav-link" target="_blank">
+    <img src="../assets/icons/linkedin.png" alt="" />
+    <span>LinkedIn</span>
+  </a>
+
+  <a href="https://github.com/WilsonSchwegler" class="nav-link" target="_blank">
+    <img src="../assets/icons/github.png" alt="" />
+    <span>GitHub</span>
+  </a>
+
+  <a href="../cv/assets/Resume.pdf" class="nav-link" target="_blank">
+    <img src="../assets/icons/resume.png" alt="" />
+    <span>CV</span>
+  </a>
+</nav>
+
+<main class="blog-post">
+  <h1>How Unique is a Pitcher? Measuring Pitch Profile Difference with Statcast</h1>
+  <p class="blog-date">March 2026</p>
+
+  <p>
+    The emergence of Statcast has fundamentally changed how pitchers are evaluated. 
+    Modern models, like Stuff+, can now assess pitch quality directly from physical 
+    characteristics (velocity, movement, spin, release, extension, etc.) without 
+    relying on noisy outcomes like ERA. While metrics like Stuff+ are excellent at 
+    answering how good a pitch is, they leave open a related question:
+  
+  </p>
+  
+  <p class="center-text">
+    How different is a pitcher from everyone else who throws similar pitches?
+  </p>
+  
+  <p>
+    That distinction matters. Deception, unfamiliarity, hitter preparation, scouting, 
+    and player evaluation all depend on relative uniqueness, not just raw pitch quality. 
+    This work introduces Unique+, a descriptive metric designed to quantify how unusual 
+    a pitcher’s overall pitch profile is compared to his peers and explores how it can 
+    be used alongside Stuff+ to add context to pitcher evaluation. 
+  </p>
+
+  <h2>How Unique+ is Calculated</h2>
+
+  <p>
+    At a high level, Unique+ measures the distance in pitch-shape space. For each pitcher, 
+    I constructed a feature vector using pitch-level characteristics across their arsenal 
+    including:
+  </p>
+  
+  <ul>
+    <li>Velocity</li>
+    <li>Horizontal and vertical movement</li>
+    <li>Spin rate and spin axis</li>
+    <li>Extension</li>
+    <li>Release and plate location</li>
+    <li>Pitch mix indicators</li>
+  </ul>
+
+  <p>
+    All features are standardized within handedness to ensure fair comparisons between 
+    right- and left-handed pitchers. 
+  </p>
+
+  <p>
+    Using k-nearest-neighbors (kNN), each pitcher is compared to their closest peers in 
+    this multi-dimensional feature space. A pitcher’s average distance to their nearest 
+    neighbors serves as their raw uniqueness score. 
+  </p>
+
+  <p>
+    To make this metric interpretable, scores were normalized by the league average for 
+    each year by handedness. The result is scaled so that 100 is equal to the league average 
+    and higher values indicate more unusual pitch profiles (110 means that a pitcher's profile 
+    is approximately 10% farther from his nearest peers than the leauge average). Importantly, 
+    Unique+ is not optimized on outcomes. It is intentionally descriptive and designed to answer 
+    what a pitcher looks like, not how good or effective is he.  
+  </p>
+
+  <h2>The Most Unique Pitchers of 2025</h2>
+
+  <p>
+    Below are the five most unique right- and left-handed pitchers by Unique+ in 2025. 
+  </p>
+
+  <figure class="blog-figure">
+  <img
+    src="../assets/blog/unique_pitchers_2025.png"
+    alt="most unique pitchers of 2025"
+  />
+  <figcaption>
+    Figure 1: The most unique right- and left-handed pitchers of 2025 by Unique+. 
+  </figcaption>
+  </figure>
+
+  <p>
+    These pitchers are not necessarily the best in baseball, nor should they be interpreted 
+    as such. Instead, they are pitchers for whom it is difficult to find close stylistic comps 
+    for. In many cases, their uniqueness comes from unusual combinations in pitch shapes, 
+    release traits, or pitch mixes rather than extreme values in a single dimension. 
+  </p>
+
+  <h2>Pitch-Level Examples</h2>
+
+  <p>
+    While Unique+ is defined at the pitcher level, the same framework can be applied at the pitch 
+    level to identify individual pitches that are unusual relative to others of the same type. 
+  </p>
+
+  <p>
+    Some pitches that stood out include:
+  </p>
+
+  <figure class="blog-figure">
+  <img
+    src="../assets/blog/unique_pitches_2025.png"
+    alt="some of the most unique pitches of 2025"
+  />
+  <figcaption>
+    Figure 2: Some of the most Unique pitches of 2025 by Unique+. 
+  </figcaption>
+  </figure>
+
+  <p>
+    It is worth noting that uniqueness alone does not indicate effectiveness. Some pitches with 
+    high unique scores are unique for the wrong reasons and perform poorly as a result. Others, 
+    however, represent true “unicorn” offerings, pitches that are both unusual and highly effective. 
+    Unique+ is designed to flag difference, not to judge quality. 
+  </p>
+
+  <h2>Unique+ paired with Stuff+</h2>
+
+  <p>
+    Because Unique+ is descriptive by construction, the relevant question is not whether it outperforms 
+    Stuff+, but whether it adds meaningful context once pitch quality is accounted for. To explore this, 
+    I examined pitcher performance within average fastball velocity ranges and estimated regressions of 
+    the form:
+  </p>
+
+  <p class="center-text">
+    FIP ∼ (Stuff+) + (Unique+)
+  </p>
+  
+  <p>
+    By placing pitchers into velocity bins, this approach isolates comparisons between pitchers with similar 
+    raw velocity while controlling for pitch quality via Stuff+. The goal is not to attribute performance to 
+    uniqueness alone, but to evaluate whether stylistic differences capture information not fully explained 
+    by pitch quality metrics. The regression results can be seen in the table below: 
+  </p>
+
+  <figure class="blog-figure">
+  <img
+    src="../assets/blog/unique_regression.png"
+    alt="unique regression results"
+  />
+  <figcaption>
+    Figure 3: Unique+ regression results by velocity bin. 
+  </figcaption>
+  </figure>
+
+  <h3>Low-Velocity Pitchers (86–89 mph)</h3>
+
+  <p>
+    Among pitchers averaging 86–89 mph, Unique+ exhibits the largest negative coefficient, suggesting a strong 
+    relationship between unusual pitch profiles and run prevention. However, this velocity range represents a 
+    small and highly selected population. At these velocities, remaining in a major league role often requires 
+    extreme stylistic traits, such as unconventional arm slots, atypical movement profiles, or deceptive release 
+    characteristics.
+  </p>
+
+  <p>
+    In this context, uniqueness functions less as a marginal advantage and more as a prerequisite for viability. 
+    As a result, while the estimated effect of Unique+ is large in this range, it likely reflects survivorship 
+    and selection effects rather than a broadly generalizable relationship.
+  </p>
+
+  <h3>Lower-Mid Velocity Pitchers (89–92 mph)</h3>
+
+  <p>
+    In the 89–92 mph range, the relationship between Unique+ and FIP weakens substantially. Coefficients are small 
+    and statistically insignificant, indicating that within this group, variation in uniqueness provides little 
+    additional explanatory power once Stuff+ is accounted for.
+  </p>
+
+  <p>
+    This is a transitional range in which pitchers may succeed either through above-average pitch quality or through 
+    atypical stylistic traits, but uniqueness alone does not appear to systematically differentiate outcomes.
+  </p>
+
+  <h3>Core Velocity Range (92–98 mph)</h3>
+
+  <p>
+    The most consistent signal for Unique+ appears in the 92–98 mph range. Across multiple bins within this interval, 
+    Unique+ shows a small but statistically significant negative relationship with FIP after controlling for Stuff+. 
+    In practical terms, among pitchers with comparable velocity and Stuff+, those with more unusual pitch profiles tend 
+    to allow slightly fewer runs.
+  </p>
+
+  <p>
+    The magnitude of this effect is modest, and Stuff+ remains the dominant driver of performance. However, this is 
+    precisely the environment in which a descriptive metric like Unique+ is most informative. Unlike at very low 
+    velocities, uniqueness is not a prerequisite for inclusion, and unlike at very high velocities, pitchers are not 
+    uniformly overpowering. In this middle range, stylistic differentiation appears to function as a secondary advantage.
+  </p>
+
+  <h3>High-Velocity Pitchers (98+ mph)</h3>
+
+  <p>
+    At the upper end of the velocity spectrum, the relationship between Unique+ and performance becomes less stable. 
+    Sample sizes are considerably smaller, and coefficients lose statistical significance. This is unsurprising as at 
+    extreme velocities, raw stuff dominates outcomes, and many pitchers succeed with relatively conventional pitch profiles.
+  </p>
+
+  <h2>What Unique+ is and Isn’t</h2>
+
+  <p>
+    Unique+ should not be interpreted as a standalone evaluation metric. It does not attempt to predict performance, nor 
+    does it claim that being different is inherently good.
+  </p>
+  
+  <p>
+    Instead, it is best viewed as:
+  </p>
+
+  <ul>
+    <li>A contextual input alongside Stuff+</li>
+    <li>A tool for identifying pitchers whose results may not align cleanly with pitch quality alone</li>
+    <li>A framework for finding unusual player comps and stylistic outliers</li>
+  </ul>
+
+  <p>
+    For player evaluation and development, Unique+ can help answer questions like:
+  </p>
+
+  <ul>
+    <li>Which pitchers require different scouting or preparation strategies?</li>
+    <li>Which arms succeed (or fail) in ways not fully explained by pitch quality models?</li>
+    <li>Where does a pitcher sit stylistically within the league, not just on a quality scale?</li>
+  </ul>
+
+  <h2>Conclusion</h2>
+
+  <p>
+    Unique+ was built to answer a simple question: how different is this pitcher from his peers?
+  </p>
+
+  <p>
+    By design, it does not compete with Stuff+. Instead, it complements it by adding a layer of stylistic 
+    context that pitch quality metrics alone cannot capture. The results suggest that while pitch quality 
+    drives outcomes, pitch profile uniqueness provides additional, situational information, particularly 
+    among pitchers with similar physical tools.
+  </p>
+
+
+</main>
+
+</body>
+</html>
