@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>How Unique is a Pitcher? Measuring Pitch Profile Difference with Statcast</title>
+  <title>How Unique is a Pitcher?</title>
   <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -36,65 +36,81 @@
 </nav>
 
 <main class="blog-post">
-  <h1>How Unique is a Pitcher? Measuring Pitch Profile Difference with Statcast</h1>
+  <h1>How Unique is a Pitcher?</h1>
   <p class="blog-date">March 2026</p>
 
   <p>
-    The emergence of Statcast has fundamentally changed how pitchers are evaluated. 
-    Modern models, like Stuff+, can now assess pitch quality directly from physical 
-    characteristics (velocity, movement, spin, release, extension, etc.) without 
-    relying on noisy outcomes like ERA. While metrics like Stuff+ are excellent at 
-    answering how good a pitch is, they leave open a related question:
-  
-  </p>
-  
-  <p class="center-text">
-    How different is a pitcher from everyone else who throws similar pitches?
-  </p>
-  
-  <p>
-    That distinction matters. Deception, unfamiliarity, hitter preparation, scouting, 
-    and player evaluation all depend on relative uniqueness, not just raw pitch quality. 
-    This work introduces Unique+, a descriptive metric designed to quantify how unusual 
-    a pitcher’s overall pitch profile is compared to his peers and explores how it can 
-    be used alongside Stuff+ to add context to pitcher evaluation. 
+    The creation of Statcast has fundamentally reshaped pitcher evaluation. Modern models such as Stuff+ estimate pitch quality directly from physical characteristics, including velocity, movement, spin, release traits, and extension, allowing teams to evaluate underlying skill independent of noisy run prevention outcomes. These types of models answer an essential question: how good is a pitcher’s stuff?
   </p>
 
-  <h2>How Unique+ is Calculated</h2>
+  <p>
+    They do not, however, answer a different but also important question: how different is a pitcher from everyone else?
+  </p>
 
   <p>
-    At a high level, Unique+ measures the distance in pitch-shape space. For each pitcher, 
-    I constructed a feature vector using pitch-level characteristics across their arsenal 
-    including:
+    Two pitchers may have similar Stuff+ while having dramatically different heights, arm slots, movement profiles, etc (Ex. Mason Miller had an overall Stuff+ of 123 in 2025 and Tim Hill had a similar overall Stuff+ of 122 while being vastly different types of pitchers). From the perspective of scouting, hitter preparation, player development, and roster construction, this differentiation matters. Hitters prepare for archetypes, bullpens can be redundant, and development plans and player evaluation often involve identifying comparable pitchers with similar profiles.
+  </p>
+
+  <p>
+    This study introduces Unique+, a descriptive metric designed to quantify how unusual a pitcher’s overall pitch profile is relative to his peers. Unique+ is not optimized on performance outcomes, and its purpose is to measure stylistic differentiation in pitch profile space.
+  </p>
+
+  <h2>Constructing Unique+</h2>
+
+  <p>
+    For each pitcher-season, a high-dimensional feature vector was constructed from Statcast derived pitch characteristics. For each pitch type (FF, SI, FC, SL, CU, KC, CH, FS, SV, CS, FO, KN, ST), the following features were included:
   </p>
   
   <ul>
-    <li>Velocity</li>
-    <li>Horizontal and vertical movement</li>
-    <li>Spin rate and spin axis</li>
+    <li>Average velocity</li>
+    <li>Horizontal movement</li>
+    <li>Vertical movement</li>
+    <li>Spin rate</li>
+    <li>Spin axis</li>
     <li>Extension</li>
-    <li>Release and plate location</li>
-    <li>Pitch mix indicators</li>
+    <li>Plate_x</li>
+    <li>Plate_z</li>
   </ul>
 
   <p>
-    All features are standardized within handedness to ensure fair comparisons between 
-    right- and left-handed pitchers. 
+    In addition, pitch usage indicators (has_* columns) and effective arm angle metrics (*_arm_angle_eff) were incorporated to capture arsenal composition and release geometry. All features were standardized within handedness (right- and left-handed pitchers separately) using z-scores. 
   </p>
 
   <p>
-    Using k-nearest-neighbors (kNN), each pitcher is compared to their closest peers in 
-    this multi-dimensional feature space. A pitcher’s average distance to their nearest 
-    neighbors serves as their raw uniqueness score. 
+    The implementation follows a k-nearest neighbors structure:
+  </p>
+
+  <ul>
+    <li>Distance metric: Euclidean</li>
+    <li>Neighborhood size: K = 15</li>
+    <li>Self-neighbor excluded</li>
+    <li>Uniqueness score = mean distance to 15 nearest neighbors</li>
+  </ul>
+
+  <p>
+    To improve interpretability, raw scores are scaled relative to the handedness specific league average: 
+  </p>
+
+  <ul>
+    <li>100 represents league-average stylistic proximity</li>
+    <li>120 indicates 20% greater than average structural differentiation</li>
+    <li>80 indicates closer than average proximity to peers</li>
+  </ul>
+
+  <p>Unique+ is strictly descriptive. No outcome variables are utilized in its construction.</p>
+
+  <h2>Structural Stability and Robustness</h2>
+
+  <p>
+    To determine if Unique+ reflected persistent structure rather than sampling noise, I utilized five seasons of data (2021-2025) and calculated a year to year Spearman correlation of 0.695 (p < 0.001). Stability was comparable across roles (0.693 for relievers, 0.659 for starters) and remained between approximately 0.63 and 0.68 across primary velocity ranges between 89 and 98 mph. These magnitudes indicate that Unique+ captures persistent stylistic traits.
   </p>
 
   <p>
-    To make this metric interpretable, scores were normalized by the league average for 
-    each year by handedness. The result is scaled so that 100 is equal to the league average 
-    and higher values indicate more unusual pitch profiles (110 means that a pitcher's profile 
-    is approximately 10% farther from his nearest peers than the leauge average). Importantly, 
-    Unique+ is not optimized on outcomes. It is intentionally descriptive and designed to answer 
-    what a pitcher looks like, not how good or effective is he.  
+    Sensitivity to neighborhood size was evaluated by recomputing the metric for K = {3, 5, 10, 15, 20}. Spearman rank correlations across different values of K exceeded 0.98, and Pearson correlations of raw distances exceeded 0.98. Additionally, the ordering of top ranked pitchers remained unchanged for all values of K. 
+  </p>
+
+  <p>
+    Alternative distance metric choices (Mahalanobis and cosine distance) produced similar but non identical archetype structures (Spearman approx. 0.73 between Euclidean and Mahalanobis). Euclidean distance was utilized for interpretability and stability.
   </p>
 
   <h2>The Most Unique Pitchers of 2025</h2>
@@ -114,21 +130,13 @@
   </figure>
 
   <p>
-    These pitchers are not necessarily the best in baseball, nor should they be interpreted 
-    as such. Instead, they are pitchers for whom it is difficult to find close stylistic comps 
-    for. In many cases, their uniqueness comes from unusual combinations in pitch shapes, 
-    release traits, or pitch mixes rather than extreme values in a single dimension. 
+    These pitchers do not necessarily represent the most effective arms in the league. Rather, they represent profiles for which close stylistic comps are hard to find in standardized pitch shape space.
   </p>
 
   <h2>Pitch-Level Examples</h2>
 
   <p>
-    While Unique+ is defined at the pitcher level, the same framework can be applied at the pitch 
-    level to identify individual pitches that are unusual relative to others of the same type. 
-  </p>
-
-  <p>
-    Some pitches that stood out include:
+    The same framework can also be applied at the pitch level by restricting the feature space to characteristics within a specific pitch type. This allows identification of individual offerings that are structurally distant from peers that throw the same pitch. Some pitches that stood out to me include: 
   </p>
 
   <figure class="blog-figure">
@@ -142,133 +150,81 @@
   </figure>
 
   <p>
-    It is worth noting that uniqueness alone does not indicate effectiveness. Some pitches with 
-    high unique scores are unique for the wrong reasons and perform poorly as a result. Others, 
-    however, represent true “unicorn” offerings, pitches that are both unusual and highly effective. 
-    Unique+ is designed to flag difference, not to judge quality. 
+    It’s worth restating that uniqueness alone does not indicate effectiveness. Some pitches with high unique scores are unique for the wrong reasons and perform poorly as a result. Others, however, represent true “unicorns” (Taylor Rogers’s sinker and slider), pitches that are both unusual and highly effective. Unique+ is designed to flag difference, not to judge quality.  
   </p>
 
-  <h2>Unique+ paired with Stuff+</h2>
+  <h2>Evaluation Against Run Prevention</h2>
 
   <p>
-    Because Unique+ is descriptive by construction, the relevant question is not whether it outperforms 
-    Stuff+, but whether it adds meaningful context once pitch quality is accounted for. To explore this, 
-    I examined pitcher performance within average fastball velocity ranges and estimated regressions of 
-    the form:
+    To evaluate whether stylistic differentiation captures information beyond pitch quality, regression models were estimated with FIP as the dependent variable.
+  </p>
+
+  <p>
+    The base model:
   </p>
 
   <p class="center-text">
-    FIP ∼ (Stuff+) + (Unique+)
+    FIP ∼ (Stuff+) + (Average Fastball Velocity)
   </p>
   
   <p>
-    By placing pitchers into velocity bins, this approach isolates comparisons between pitchers with similar 
-    raw velocity while controlling for pitch quality via Stuff+. The goal is not to attribute performance to 
-    uniqueness alone, but to evaluate whether stylistic differences capture information not fully explained 
-    by pitch quality metrics. The regression results can be seen in the table below: 
-  </p>
-
-  <figure class="blog-figure">
-  <img
-    src="../assets/blog/unique_regression.png"
-    alt="unique regression results"
-  />
-  <figcaption>
-    Figure 3: Unique+ regression results by velocity bin. 
-  </figcaption>
-  </figure>
-
-  <h3>Low-Velocity Pitchers (86–89 mph)</h3>
-
-  <p>
-    Among pitchers averaging 86–89 mph, Unique+ exhibits the largest negative coefficient, suggesting a strong 
-    relationship between unusual pitch profiles and run prevention. However, this velocity range represents a 
-    small and highly selected population. At these velocities, remaining in a major league role often requires 
-    extreme stylistic traits, such as unconventional arm slots, atypical movement profiles, or deceptive release 
-    characteristics.
+    produced R² = 0.2135.
   </p>
 
   <p>
-    In this context, uniqueness functions less as a marginal advantage and more as a prerequisite for viability. 
-    As a result, while the estimated effect of Unique+ is large in this range, it likely reflects survivorship 
-    and selection effects rather than a broadly generalizable relationship.
+    Adding Unique+:
   </p>
-
-  <h3>Lower-Mid Velocity Pitchers (89–92 mph)</h3>
-
-  <p>
-    In the 89–92 mph range, the relationship between Unique+ and FIP weakens substantially. Coefficients are small 
-    and statistically insignificant, indicating that within this group, variation in uniqueness provides little 
-    additional explanatory power once Stuff+ is accounted for.
+  
+  <p class="center-text">
+    FIP ∼ (Stuff+) + (Average Fastball Velocity) + (Unique+)
   </p>
 
   <p>
-    This is a transitional range in which pitchers may succeed either through above-average pitch quality or through 
-    atypical stylistic traits, but uniqueness alone does not appear to systematically differentiate outcomes.
-  </p>
-
-  <h3>Core Velocity Range (92–98 mph)</h3>
-
-  <p>
-    The most consistent signal for Unique+ appears in the 92–98 mph range. Across multiple bins within this interval, 
-    Unique+ shows a small but statistically significant negative relationship with FIP after controlling for Stuff+. 
-    In practical terms, among pitchers with comparable velocity and Stuff+, those with more unusual pitch profiles tend 
-    to allow slightly fewer runs.
+    increased R² to 0.2170 (ΔR² = 0.0035). The coefficient on Unique+ was −0.0036 (p = 0.00065).
   </p>
 
   <p>
-    The magnitude of this effect is modest, and Stuff+ remains the dominant driver of performance. However, this is 
-    precisely the environment in which a descriptive metric like Unique+ is most informative. Unlike at very low 
-    velocities, uniqueness is not a prerequisite for inclusion, and unlike at very high velocities, pitchers are not 
-    uniformly overpowering. In this middle range, stylistic differentiation appears to function as a secondary advantage.
+    A 10-point increase in Unique+ corresponds to approximately 0.036 lower FIP. The effect is statistically detectable but modest relative to the influence of Stuff+.
   </p>
 
-  <h3>High-Velocity Pitchers (98+ mph)</h3>
-
   <p>
-    At the upper end of the velocity spectrum, the relationship between Unique+ and performance becomes less stable. 
-    Sample sizes are considerably smaller, and coefficients lose statistical significance. This is unsurprising as at 
-    extreme velocities, raw stuff dominates outcomes, and many pitchers succeed with relatively conventional pitch profiles.
+    Including a Stuff+ × Unique+ interaction increased R² by 0.0012, with the interaction term marginally significant (p ≈ 0.05). The interaction magnitude is also small. These results indicate that stylistic differentiation explains a small residual component of run prevention after controlling for pitch quality and velocity.
   </p>
 
-  <h2>What Unique+ is and Isn’t</h2>
+  <h2>Applications Beyond Run Prevention</h2>
 
   <p>
-    Unique+ should not be interpreted as a standalone evaluation metric. It does not attempt to predict performance, nor 
-    does it claim that being different is inherently good.
+    While the explanatory power for FIP is limited, the framework underlying Unique+ has broader applications.
   </p>
   
   <p>
-    Instead, it is best viewed as:
+    Because the metric is built on a k-nearest neighbors structure, it produces similarity relationships. For any given pitcher, the 15 nearest neighbors represent structurally comparable pitch profiles in standardized space. This allows for player comp identification based on movement, velocity, and release rather than outcomes.
   </p>
-
-  <ul>
-    <li>A contextual input alongside Stuff+</li>
-    <li>A tool for identifying pitchers whose results may not align cleanly with pitch quality alone</li>
-    <li>A framework for finding unusual player comps and stylistic outliers</li>
-  </ul>
 
   <p>
-    For player evaluation and development, Unique+ can help answer questions like:
+    In player development, a pitcher can be mapped into feature space and compared to historically successful pitchers occupying the same neighborhood. Differences in pitch utilization or sequencing can be examined among these similar arms to identify trends or utilization that could lead to more success. 
   </p>
 
-  <ul>
-    <li>Which pitchers require different scouting or preparation strategies?</li>
-    <li>Which arms succeed (or fail) in ways not fully explained by pitch quality models?</li>
-    <li>Where does a pitcher sit stylistically within the league, not just on a quality scale?</li>
-  </ul>
+  <p>
+    At the pitch level, nearest neighbor comparisons allow for the identification of structurally similar pitches across the league. If two sliders share movement and release characteristics but produce different outcomes, where and when the pitch is thrown may explain the gap. Additionally, for underperforming pitchers, identifying successful fastball comps can help coaching staffs determine which movement profiles and pitch types a pitcher might want to target given their natural release.
+  </p>
+
+  <p>
+    The current implementation weighs all features equally in Euclidean space, however feature weighting can be implemented if certain characteristics are more important than others. Movement traits, release, velocity, or usage indicators can be emphasized depending on the application. 
+  </p>
+
+  <p>
+    At the roster level, the same approach can quantify bullpen or rotation redundancy. A bullpen composed of pitchers occupying tightly clustered regions in feature space may lack stylistic diversity, whereas a bullpen spanning broader regions may provide greater matchup variability. 
+  </p>
+
+  <p>
+    Thus, while Unique+ adds limited marginal predictive power for run prevention, it provides a structured representation of stylistic differentiation that can inform player evaluation, development, and roster construction.
+  </p>
 
   <h2>Conclusion</h2>
 
   <p>
-    Unique+ was built to answer a simple question: how different is this pitcher from his peers?
-  </p>
-
-  <p>
-    By design, it does not compete with Stuff+. Instead, it complements it by adding a layer of stylistic 
-    context that pitch quality metrics alone cannot capture. The results suggest that while pitch quality 
-    drives outcomes, pitch profile uniqueness provides additional, situational information, particularly 
-    among pitchers with similar physical tools.
+    Unique+ quantifies stylistic differentiation in standardized pitch profile space using Euclidean k-nearest neighbors. Across five seasons, it demonstrates strong year-to-year stability and robustness to neighborhood specification. While its incremental relationship with run prevention is modest, stylistic differentiation is measurable, persistent, and structurally meaningful. Unique+ does not replace Stuff+. It describes how a pitcher differs from his peers within the same quality tier, providing a framework that extends beyond performance prediction into comp identification, development strategy, and roster construction.
   </p>
 
 
